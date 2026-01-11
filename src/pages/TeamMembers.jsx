@@ -123,7 +123,7 @@ export default function TeamMembers() {
     <div className="p-4 space-y-6">
 
       {/* ===== ADD FORM ===== */}
-      <form onSubmit={handleCreate} className="card bg-base-100 shadow p-4 max-w-xl">
+      <form onSubmit={handleCreate} className="card  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow p-4 max-w-xl">
         <h2 className="font-bold text-lg mb-3">Add Team Member</h2>
 
         <input
@@ -158,7 +158,7 @@ export default function TeamMembers() {
       </form>
 
       {/* ===== TABLE ===== */}
-      <div className="overflow-x-auto bg-base-100 shadow rounded">
+      <div className="overflow-x-auto  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow rounded">
         <table className="table table-zebra">
           <thead>
             <tr>

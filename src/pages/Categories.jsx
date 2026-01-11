@@ -80,7 +80,7 @@ export default function Categories() {
       {/* ===== Add Form ===== */}
       <form
         onSubmit={handleCreate}
-        className="card bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-whiteshadow p-4 max-w-xl"
+        className="card bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white- p-4 max-w-xl"
       >
         <h2 className="font-bold text-lg mb-3">Add Category</h2>
 

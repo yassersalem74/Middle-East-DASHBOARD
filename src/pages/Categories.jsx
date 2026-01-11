@@ -80,7 +80,7 @@ export default function Categories() {
       {/* ===== Add Form ===== */}
       <form
         onSubmit={handleCreate}
-        className="card bg-base-100 shadow p-4 max-w-xl"
+        className="card bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-whiteshadow p-4 max-w-xl"
       >
         <h2 className="font-bold text-lg mb-3">Add Category</h2>
 
@@ -102,7 +102,7 @@ export default function Categories() {
       </form>
 
       {/* ===== Table ===== */}
-      <div className="overflow-x-auto bg-base-100 shadow rounded">
+      <div className="overflow-x-auto bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow rounded">
         <table className="table">
           <thead>
             <tr>
@@ -149,7 +149,7 @@ export default function Categories() {
 
       {/* ===== Edit Modal ===== */}
       {editItem && (
-        <div className="modal modal-open">
+        <div className="modal modal-open bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
           <div className="modal-box">
             <h3 className="font-bold text-lg mb-3">Edit Category</h3>
 

@@ -9,3 +9,7 @@ tr,
 td {
   border: 1px solid white !important;
 }
+
+.modal-box {
+  background: linear-gradient(to right, #0f3d2e, #0b1f2a, #0a1b25);
+}

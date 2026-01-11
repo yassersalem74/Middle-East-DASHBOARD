@@ -200,7 +200,7 @@ export default function Exhibition() {
       {/* ===== EDIT MODAL ===== */}
       {editItem && (
         <div className="modal modal-open">
-          <div className="modal-box">
+          <div className="modal-box ">
             <h3 className="font-bold text-lg mb-3">Edit Exhibition</h3>
 
             <input className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
@@ -245,7 +245,7 @@ export default function Exhibition() {
       {/* ===== DELETE MODAL ===== */}
       {deleteItem && (
         <div className="modal modal-open">
-          <div className="modal-box">
+          <div className="modal-box ">
             <h3 className="font-bold text-lg">Delete Exhibition</h3>
             <p className="py-4">Delete <b>{deleteItem.title}</b>?</p>
             <div className="modal-action">

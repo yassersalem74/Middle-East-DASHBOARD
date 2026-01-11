@@ -11,5 +11,11 @@ td {
 }
 
 .modal-box {
-  background: linear-gradient(to right, #0f3d2e, #0b1f2a, #0a1b25);
+  background: linear-gradient(to right, #0f3d2e, #0b1f2a, #0a1b25) !important;
+}
+
+.select{
+  background-color: #0B1F2A !important;
+  border: 1px solid white !important;
+
 }

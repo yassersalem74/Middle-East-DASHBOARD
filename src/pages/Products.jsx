@@ -15,7 +15,7 @@ export default function Products() {
     purity: "",
     grade: "",
     quantity: "",
-    categoryId: ""
+    categoryId: "",
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -42,7 +42,7 @@ export default function Products() {
     const fetchData = async () => {
       const [prodRes, catRes] = await Promise.all([
         ProductsAPI.getAll(),
-        CategoriesAPI.getAll()
+        CategoriesAPI.getAll(),
       ]);
 
       if (mounted) {
@@ -81,7 +81,7 @@ export default function Products() {
     try {
       await ProductsAPI.create(data);
     } catch {
-      console.log("error")
+      console.log("error");
     }
 
     setForm({
@@ -91,7 +91,7 @@ export default function Products() {
       purity: "",
       grade: "",
       quantity: "",
-      categoryId: ""
+      categoryId: "",
     });
     setImageFile(null);
     setImagePreview(null);
@@ -123,7 +123,7 @@ export default function Products() {
     try {
       await ProductsAPI.update(editItem.id, data);
     } catch {
-      console.log("error")
+      console.log("error");
     }
 
     setEditItem(null);
@@ -145,52 +145,78 @@ export default function Products() {
 
   return (
     <div className="p-4 space-y-6">
-
       {/* ===== ADD FORM ===== */}
-      <form onSubmit={handleCreate} className="card  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow p-4">
+      <form
+        onSubmit={handleCreate}
+        className="card  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow p-4"
+      >
         <h2 className="font-bold text-lg mb-3">Add Product</h2>
 
         <div className="grid md:grid-cols-3 gap-3">
-          {["title","casNumber","purity","grade","quantity"].map((field) => (
-            <input
-              key={field}
-              name={field}
-              value={form[field]}
-              onChange={(e)=>setForm({...form,[field]:e.target.value})}
-              className="input input-bordered"
-              placeholder={field}
-            />
-          ))}
+          {["title", "casNumber", "purity", "grade", "quantity"].map(
+            (field) => (
+              <input
+                key={field}
+                name={field}
+                value={form[field]}
+                onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+                className="input input-bordered bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+                placeholder={field}
+              />
+            )
+          )}
 
           <select
             name="categoryId"
             value={form.categoryId}
-            onChange={(e)=>setForm({...form,categoryId:e.target.value})}
-            className="select select-bordered"
+            onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
+            className="
+                  select select-bordered w-full
+                  bg-[#0B1F2A]
+                  text-white
+                  border border-white/20
+                  focus:border-emerald-400
+                "
           >
-            <option value="">Select Category</option>
-            {categories.map(c=>(
-              <option key={c.id} value={c.id}>{c.title}</option>
+            <option value="" className="bg-[#0B1F2A] text-white">
+              Select Category
+            </option>
+
+            {categories.map((c) => (
+              <option
+                key={c.id}
+                value={c.id}
+                className="bg-[#0B1F2A] text-white"
+              >
+                {c.title}
+              </option>
             ))}
           </select>
         </div>
 
         <textarea
-          className="textarea textarea-bordered w-full mt-3"
+          className="textarea textarea-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           placeholder="Description"
           value={form.description}
-          onChange={(e)=>setForm({...form,description:e.target.value})}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
 
-        <input type="file"
-          className="file-input file-input-bordered w-full mt-3"
-          onChange={(e)=>handleImage(e.target.files[0])}
+        <input
+          type="file"
+          className="file-input file-input-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+          onChange={(e) => handleImage(e.target.files[0])}
         />
 
-        {imagePreview && <img src={imagePreview} className="w-24 mt-3 rounded" />}
+        {imagePreview && (
+          <img src={imagePreview} className="w-24 mt-3 rounded" />
+        )}
 
         <button className="btn btn-success mt-3" disabled={loadingAdd}>
-          {loadingAdd ? <span className="loading loading-spinner"></span> : "Add Product"}
+          {loadingAdd ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            "Add Product"
+          )}
         </button>
       </form>
 
@@ -198,7 +224,7 @@ export default function Products() {
       <div className="overflow-x-auto  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow rounded">
         <table className="table table-zebra">
           <thead>
-            <tr>
+            <tr className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
               <th>ID</th>
               <th>Image</th>
               <th>Title</th>
@@ -220,10 +246,15 @@ export default function Products() {
                 </td>
               </tr>
             ) : (
-              products.map(p=>(
-                <tr key={p.id}>
+              products.map((p) => (
+                <tr
+                  key={p.id}
+                  className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+                >
                   <td>{p.id}</td>
-                  <td><img src={p.imageUrl} className="w-12 rounded"/></td>
+                  <td>
+                    <img src={p.imageUrl} className="w-12 rounded" />
+                  </td>
                   <td>{p.title}</td>
                   <td>{p.description}</td>
                   <td>{p.casNumber}</td>
@@ -232,8 +263,18 @@ export default function Products() {
                   <td>{p.quantity}</td>
                   <td>{p.category?.title}</td>
                   <td className="space-x-1">
-                    <button className="btn btn-xs btn-info" onClick={()=>setEditItem(p)}>Edit</button>
-                    <button className="btn btn-xs btn-error" onClick={()=>setDeleteItem(p)}>Delete</button>
+                    <button
+                      className="btn btn-xs btn-info"
+                      onClick={() => setEditItem(p)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-xs btn-error"
+                      onClick={() => setDeleteItem(p)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
@@ -249,37 +290,57 @@ export default function Products() {
             <h3 className="font-bold text-lg mb-3">Edit Product</h3>
 
             <div className="grid md:grid-cols-3 gap-3">
-              {["title","casNumber","purity","grade","quantity"].map((field)=>(
-                <input
-                  key={field}
-                  className="input input-bordered"
-                  value={editItem[field] || ""}
-                  onChange={(e)=>setEditItem({...editItem,[field]:e.target.value})}
-                  placeholder={field}
-                />
-              ))}
+              {["title", "casNumber", "purity", "grade", "quantity"].map(
+                (field) => (
+                  <input
+                    key={field}
+                    className="input input-bordered bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+                    value={editItem[field] || ""}
+                    onChange={(e) =>
+                      setEditItem({ ...editItem, [field]: e.target.value })
+                    }
+                    placeholder={field}
+                  />
+                )
+              )}
 
               <select
-                className="select select-bordered"
+                className="select select-bordered  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
                 value={editItem.categoryId || ""}
-                onChange={(e)=>setEditItem({...editItem,categoryId:e.target.value})}
+                onChange={(e) =>
+                  setEditItem({ ...editItem, categoryId: e.target.value })
+                }
               >
-                <option value="">Select Category</option>
-                {categories.map(c=>(
-                  <option key={c.id} value={c.id}>{c.title}</option>
+                <option
+                  value=""
+                  className=" bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+                >
+                  Select Category
+                </option>
+                {categories.map((c) => (
+                  <option
+                    className=" bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+                    key={c.id}
+                    value={c.id}
+                  >
+                    {c.title}
+                  </option>
                 ))}
               </select>
             </div>
 
             <textarea
-              className="textarea textarea-bordered w-full mt-3"
+              className="textarea textarea-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.description || ""}
-              onChange={(e)=>setEditItem({...editItem,description:e.target.value})}
+              onChange={(e) =>
+                setEditItem({ ...editItem, description: e.target.value })
+              }
             />
 
-            <input type="file"
-              className="file-input file-input-bordered w-full mt-3"
-              onChange={(e)=>handleImage(e.target.files[0])}
+            <input
+              type="file"
+              className="file-input file-input-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+              onChange={(e) => handleImage(e.target.files[0])}
             />
 
             <img
@@ -288,10 +349,20 @@ export default function Products() {
             />
 
             <div className="modal-action">
-              <button className="btn btn-success" onClick={handleUpdate} disabled={loadingEdit}>
-                {loadingEdit ? <span className="loading loading-spinner"></span> : "Save"}
+              <button
+                className="btn btn-success"
+                onClick={handleUpdate}
+                disabled={loadingEdit}
+              >
+                {loadingEdit ? (
+                  <span className="loading loading-spinner"></span>
+                ) : (
+                  "Save"
+                )}
               </button>
-              <button className="btn" onClick={()=>setEditItem(null)}>Cancel</button>
+              <button className="btn" onClick={() => setEditItem(null)}>
+                Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -302,12 +373,24 @@ export default function Products() {
         <div className="modal modal-open">
           <div className="modal-box">
             <h3 className="font-bold text-lg">Delete Product</h3>
-            <p className="py-4">Delete <b>{deleteItem.title}</b>?</p>
+            <p className="py-4">
+              Delete <b>{deleteItem.title}</b>?
+            </p>
             <div className="modal-action">
-              <button className="btn btn-error" onClick={handleDelete} disabled={loadingDelete}>
-                {loadingDelete ? <span className="loading loading-spinner"></span> : "Delete"}
+              <button
+                className="btn btn-error"
+                onClick={handleDelete}
+                disabled={loadingDelete}
+              >
+                {loadingDelete ? (
+                  <span className="loading loading-spinner"></span>
+                ) : (
+                  "Delete"
+                )}
               </button>
-              <button className="btn" onClick={()=>setDeleteItem(null)}>Cancel</button>
+              <button className="btn" onClick={() => setDeleteItem(null)}>
+                Cancel
+              </button>
             </div>
           </div>
         </div>

@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+input,
+textarea,
+form,
+table,
+tr,
+td {
+  border: 1px solid white !important;
+}

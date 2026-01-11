@@ -86,7 +86,7 @@ export default function Categories() {
 
         <input
           type="text"
-          className="input input-bordered w-full"
+          className="input input-bordered w-full bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           placeholder="Category title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -105,7 +105,7 @@ export default function Categories() {
       <div className="overflow-x-auto bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow rounded">
         <table className="table">
           <thead>
-            <tr>
+            <tr className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
               <th>ID</th>
               <th>Title</th>
               <th className="text-right">Actions</th>
@@ -121,7 +121,7 @@ export default function Categories() {
               </tr>
             ) : (
               categories.map((cat) => (
-                <tr key={cat.id}>
+                <tr key={cat.id} className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
                   <td>{cat.id}</td>
                   <td>{cat.title}</td>
                   <td className="text-right space-x-2">
@@ -154,7 +154,7 @@ export default function Categories() {
             <h3 className="font-bold text-lg mb-3">Edit Category</h3>
 
             <input
-              className="input input-bordered w-full"
+              className="input input-bordered w-full bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.title}
               onChange={(e) =>
                 setEditItem({ ...editItem, title: e.target.value })

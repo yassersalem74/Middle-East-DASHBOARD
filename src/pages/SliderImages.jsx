@@ -119,15 +119,15 @@ export default function SliderImages() {
         <h2 className="font-bold text-lg mb-3">Add Slide</h2>
 
         <input name="title" value={form.title} onChange={handleChange}
-          className="input input-bordered w-full mb-2" placeholder="Title" />
+          className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white" placeholder="Title" />
 
         <textarea name="description" value={form.description} onChange={handleChange}
-          className="textarea textarea-bordered w-full mb-2" placeholder="Description" />
+          className="textarea textarea-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white" placeholder="Description" />
 
         <textarea name="extraDescription" value={form.extraDescription} onChange={handleChange}
-          className="textarea textarea-bordered w-full mb-2" placeholder="Extra Description" />
+          className="textarea textarea-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white" placeholder="Extra Description" />
 
-        <input type="file" className="file-input file-input-bordered w-full"
+        <input type="file" className="file-input file-input-bordered w-full bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           onChange={(e)=>handleImage(e.target.files[0])} />
 
         {imagePreview && <img src={imagePreview} className="w-28 mt-3 rounded" />}
@@ -141,7 +141,7 @@ export default function SliderImages() {
       <div className="overflow-x-auto  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow rounded">
         <table className="table table-zebra">
           <thead>
-            <tr>
+            <tr className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
               <th>ID</th>
               <th>Image</th>
               <th>Title</th>
@@ -160,7 +160,7 @@ export default function SliderImages() {
               </tr>
             ) : (
               slides.map(s => (
-                <tr key={s.id}>
+                <tr key={s.id} className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
                   <td>{s.id}</td>
                   <td><img src={s.imageUrl} className="w-14 rounded"/></td>
                   <td>{s.title}</td>
@@ -183,19 +183,19 @@ export default function SliderImages() {
           <div className="modal-box">
             <h3 className="font-bold text-lg mb-3">Edit Slide</h3>
 
-            <input className="input input-bordered w-full mb-2"
+            <input className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.title}
               onChange={(e)=>setEditItem({...editItem,title:e.target.value})}/>
 
-            <textarea className="textarea textarea-bordered w-full mb-2"
+            <textarea className="textarea textarea-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.description}
               onChange={(e)=>setEditItem({...editItem,description:e.target.value})}/>
 
-            <textarea className="textarea textarea-bordered w-full mb-2"
+            <textarea className="textarea textarea-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.extraDescription}
               onChange={(e)=>setEditItem({...editItem,extraDescription:e.target.value})}/>
 
-            <input type="file" className="file-input file-input-bordered w-full"
+            <input type="file" className="file-input file-input-bordered w-full bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               onChange={(e)=>handleImage(e.target.files[0])}/>
 
             <img src={imagePreview ? imagePreview : editItem.imageUrl}

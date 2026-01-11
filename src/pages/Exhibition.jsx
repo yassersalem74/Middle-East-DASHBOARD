@@ -131,20 +131,20 @@ export default function Exhibition() {
 
         <div className="grid md:grid-cols-2 gap-3">
           <input name="title" value={form.title} onChange={handleFormChange}
-            className="input input-bordered" placeholder="Title" />
+            className="input input-bordered bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white" placeholder="Title" />
 
           <input type="date" name="date" value={form.date} onChange={handleFormChange}
-            className="input input-bordered" />
+            className="input input-bordered bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white" />
 
           <input name="location" value={form.location} onChange={handleFormChange}
-            className="input input-bordered" placeholder="Location" />
+            className="input input-bordered bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white" placeholder="Location" />
 
           <input name="exhibitionType" value={form.exhibitionType} onChange={handleFormChange}
-            className="input input-bordered" placeholder="Exhibition Type" />
+            className="input input-bordered bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white" placeholder="Exhibition Type" />
         </div>
 
         <input type="file"
-          className="file-input file-input-bordered w-full mt-3"
+          className="file-input file-input-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           onChange={(e)=>handleImage(e.target.files[0])}
         />
 
@@ -159,7 +159,7 @@ export default function Exhibition() {
       <div className="overflow-x-auto  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow rounded">
         <table className="table table-zebra">
           <thead>
-            <tr>
+            <tr className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
               <th>ID</th>
               <th>Image</th>
               <th>Title</th>
@@ -179,7 +179,7 @@ export default function Exhibition() {
               </tr>
             ) : (
               exhibitions.map((e)=>(
-                <tr key={e.id}>
+                <tr key={e.id} className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
                   <td>{e.id}</td>
                   <td><img src={e.imageUrl} className="w-14 rounded"/></td>
                   <td>{e.title}</td>
@@ -203,28 +203,28 @@ export default function Exhibition() {
           <div className="modal-box">
             <h3 className="font-bold text-lg mb-3">Edit Exhibition</h3>
 
-            <input className="input input-bordered w-full mb-2"
+            <input className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.title}
               onChange={(e)=>setEditItem({...editItem,title:e.target.value})}
             />
 
-            <input type="date" className="input input-bordered w-full mb-2"
+            <input type="date" className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.date?.split("T")[0]}
               onChange={(e)=>setEditItem({...editItem,date:e.target.value})}
             />
 
-            <input className="input input-bordered w-full mb-2"
+            <input className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.location}
               onChange={(e)=>setEditItem({...editItem,location:e.target.value})}
             />
 
-            <input className="input input-bordered w-full mb-2"
+            <input className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.exhibitionType}
               onChange={(e)=>setEditItem({...editItem,exhibitionType:e.target.value})}
             />
 
             <input type="file"
-              className="file-input file-input-bordered w-full"
+              className="file-input file-input-bordered w-full bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               onChange={(e)=>handleImage(e.target.files[0])}
             />
 

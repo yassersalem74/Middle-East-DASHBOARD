@@ -123,21 +123,21 @@ export default function Industries() {
         <h2 className="font-bold text-lg mb-3">Add Industry</h2>
 
         <input
-          className="input input-bordered w-full mb-3"
+          className="input input-bordered w-full mb-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           placeholder="Title"
           value={form.title}
           onChange={(e)=>setForm({...form,title:e.target.value})}
         />
 
         <textarea
-          className="textarea textarea-bordered w-full"
+          className="textarea textarea-bordered w-full bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           placeholder="Description"
           value={form.description}
           onChange={(e)=>setForm({...form,description:e.target.value})}
         />
 
         <input type="file"
-          className="file-input file-input-bordered w-full mt-3"
+          className="file-input file-input-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           onChange={(e)=>handleImage(e.target.files[0])}
         />
 
@@ -152,7 +152,7 @@ export default function Industries() {
       <div className="overflow-x-auto  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow rounded">
         <table className="table table-zebra">
           <thead>
-            <tr>
+            <tr className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
               <th>ID</th>
               <th>Image</th>
               <th>Title</th>
@@ -170,7 +170,7 @@ export default function Industries() {
               </tr>
             ) : (
               industries.map((i)=>(
-                <tr key={i.id}>
+                <tr key={i.id} className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
                   <td>{i.id}</td>
                   <td><img src={i.imageUrl} className="w-14 rounded"/></td>
                   <td>{i.title}</td>
@@ -193,19 +193,19 @@ export default function Industries() {
             <h3 className="font-bold text-lg mb-3">Edit Industry</h3>
 
             <input
-              className="input input-bordered w-full mb-2"
+              className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.title}
               onChange={(e)=>setEditItem({...editItem,title:e.target.value})}
             />
 
             <textarea
-              className="textarea textarea-bordered w-full"
+              className="textarea textarea-bordered w-full bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.description}
               onChange={(e)=>setEditItem({...editItem,description:e.target.value})}
             />
 
             <input type="file"
-              className="file-input file-input-bordered w-full mt-3"
+              className="file-input file-input-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               onChange={(e)=>handleImage(e.target.files[0])}
             />
 

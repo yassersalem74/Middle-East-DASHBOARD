@@ -130,7 +130,7 @@ export default function TeamMembers() {
           name="name"
           value={form.name}
           onChange={handleChange}
-          className="input input-bordered w-full mb-2"
+          className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           placeholder="Name"
         />
 
@@ -138,13 +138,13 @@ export default function TeamMembers() {
           name="position"
           value={form.position}
           onChange={handleChange}
-          className="input input-bordered w-full mb-2"
+          className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           placeholder="Position"
         />
 
         <input
           type="file"
-          className="file-input file-input-bordered w-full"
+          className="file-input file-input-bordered w-full bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
           onChange={(e) => handleImage(e.target.files[0])}
         />
 
@@ -161,7 +161,7 @@ export default function TeamMembers() {
       <div className="overflow-x-auto  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow rounded">
         <table className="table table-zebra">
           <thead>
-            <tr>
+            <tr className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
               <th>ID</th>
               <th>Image</th>
               <th>Name</th>
@@ -172,14 +172,14 @@ export default function TeamMembers() {
 
           <tbody>
             {loadingTable ? (
-              <tr>
+              <tr >
                 <td colSpan="5" className="text-center">
                   <span className="loading loading-spinner loading-lg"></span>
                 </td>
               </tr>
             ) : (
               members.map((m) => (
-                <tr key={m.id}>
+                <tr key={m.id} className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
                   <td>{m.id}</td>
                   <td>
                     <img src={m.imageUrl} className="w-12 rounded" />
@@ -208,7 +208,7 @@ export default function TeamMembers() {
             <h3 className="font-bold text-lg mb-3">Edit Team Member</h3>
 
             <input
-              className="input input-bordered w-full mb-2"
+              className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.name}
               onChange={(e) =>
                 setEditItem({ ...editItem, name: e.target.value })
@@ -216,7 +216,7 @@ export default function TeamMembers() {
             />
 
             <input
-              className="input input-bordered w-full mb-2"
+              className="input input-bordered w-full mb-2 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               value={editItem.position}
               onChange={(e) =>
                 setEditItem({ ...editItem, position: e.target.value })
@@ -225,7 +225,7 @@ export default function TeamMembers() {
 
             <input
               type="file"
-              className="file-input file-input-bordered w-full"
+              className="file-input file-input-bordered w-full bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
               onChange={(e) => handleImage(e.target.files[0])}
             />
 

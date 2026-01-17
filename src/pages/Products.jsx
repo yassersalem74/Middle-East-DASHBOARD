@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ProductsAPI, CategoriesAPI } from "../api/api";
+import { ProductsAPI, CategoriesAPI, IndustriesAPI } from "../api/api";
 
 const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 const maxBytes = 10 * 1024 * 1024;
@@ -7,6 +7,7 @@ const maxBytes = 10 * 1024 * 1024;
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [industries, setIndustries] = useState([]);
 
   const [form, setForm] = useState({
     title: "",
@@ -16,6 +17,7 @@ export default function Products() {
     grade: "",
     quantity: "",
     categoryId: "",
+    industryId: "",
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -29,7 +31,7 @@ export default function Products() {
   const [loadingEdit, setLoadingEdit] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
 
-  // ===== Load =====
+  // ===== Load Data =====
   const loadProducts = async () => {
     setLoadingTable(true);
     const res = await ProductsAPI.getAll();
@@ -39,18 +41,22 @@ export default function Products() {
 
   useEffect(() => {
     let mounted = true;
+
     const fetchData = async () => {
-      const [prodRes, catRes] = await Promise.all([
+      const [prodRes, catRes, indRes] = await Promise.all([
         ProductsAPI.getAll(),
         CategoriesAPI.getAll(),
+        IndustriesAPI.getAll(),
       ]);
 
       if (mounted) {
         setProducts(prodRes.data);
         setCategories(catRes.data);
+        setIndustries(indRes.data);
         setLoadingTable(false);
       }
     };
+
     fetchData();
     return () => (mounted = false);
   }, []);
@@ -78,11 +84,7 @@ export default function Products() {
     });
     data.append("image", imageFile);
 
-    try {
-      await ProductsAPI.create(data);
-    } catch {
-      console.log("error");
-    }
+    await ProductsAPI.create(data);
 
     setForm({
       title: "",
@@ -92,7 +94,9 @@ export default function Products() {
       grade: "",
       quantity: "",
       categoryId: "",
+      industryId: "",
     });
+
     setImageFile(null);
     setImagePreview(null);
 
@@ -112,7 +116,8 @@ export default function Products() {
         key !== "id" &&
         key !== "imageUrl" &&
         key !== "imagePublicId" &&
-        key !== "category"
+        key !== "category" &&
+        key !== "industry"
       ) {
         data.append(key, val);
       }
@@ -120,11 +125,7 @@ export default function Products() {
 
     if (imageFile) data.append("image", imageFile);
 
-    try {
-      await ProductsAPI.update(editItem.id, data);
-    } catch {
-      console.log("error");
-    }
+    await ProductsAPI.update(editItem.id, data);
 
     setEditItem(null);
     setImageFile(null);
@@ -145,51 +146,46 @@ export default function Products() {
 
   return (
     <div className="p-4 space-y-6">
+
       {/* ===== ADD FORM ===== */}
       <form
         onSubmit={handleCreate}
-        className="card  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow p-4"
+        className="card bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow p-4"
       >
         <h2 className="font-bold text-lg mb-3">Add Product</h2>
 
         <div className="grid md:grid-cols-3 gap-3">
-          {["title", "casNumber", "purity", "grade", "quantity"].map(
-            (field) => (
-              <input
-                key={field}
-                name={field}
-                value={form[field]}
-                onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                className="input input-bordered bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
-                placeholder={field}
-              />
-            )
-          )}
+          {["title", "casNumber", "purity", "grade", "quantity"].map((field) => (
+            <input
+              key={field}
+              value={form[field]}
+              onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+              className="input input-bordered bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+              placeholder={field}
+            />
+          ))}
 
+          {/* Category */}
           <select
-            name="categoryId"
             value={form.categoryId}
             onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
-            className="
-                  select select-bordered w-full
-                  bg-[#0B1F2A]
-                  text-white
-                  border border-white/20
-                  focus:border-emerald-400
-                "
+            className="select select-bordered bg-[#0B1F2A] text-white"
           >
-            <option value="" className="bg-[#0B1F2A] text-white">
-              Select Category
-            </option>
-
+            <option value="">Select Category</option>
             {categories.map((c) => (
-              <option
-                key={c.id}
-                value={c.id}
-                className="bg-[#0B1F2A] text-white"
-              >
-                {c.title}
-              </option>
+              <option key={c.id} value={c.id}>{c.title}</option>
+            ))}
+          </select>
+
+          {/* Industry */}
+          <select
+            value={form.industryId}
+            onChange={(e) => setForm({ ...form, industryId: e.target.value })}
+            className="select select-bordered bg-[#0B1F2A] text-white"
+          >
+            <option value="">Select Industry</option>
+            {industries.map((i) => (
+              <option key={i.id} value={i.id}>{i.title}</option>
             ))}
           </select>
         </div>
@@ -203,32 +199,26 @@ export default function Products() {
 
         <input
           type="file"
-          className="file-input file-input-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+          className="file-input file-input-bordered w-full mt-3"
           onChange={(e) => handleImage(e.target.files[0])}
         />
 
-        {imagePreview && (
-          <img src={imagePreview} className="w-24 mt-3 rounded" />
-        )}
+        {imagePreview && <img src={imagePreview} className="w-24 mt-3 rounded" />}
 
         <button className="btn btn-success mt-3" disabled={loadingAdd}>
-          {loadingAdd ? (
-            <span className="loading loading-spinner"></span>
-          ) : (
-            "Add Product"
-          )}
+          {loadingAdd ? <span className="loading loading-spinner"></span> : "Add Product"}
         </button>
       </form>
 
       {/* ===== TABLE ===== */}
-      <div className="overflow-x-auto  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white shadow rounded">
+      <div className="overflow-x-auto bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white rounded">
         <table className="table table-zebra">
           <thead>
-            <tr className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white">
+            <tr>
               <th>ID</th>
               <th>Image</th>
               <th>Title</th>
-              <th>Description</th>
+              <th>Industry</th>
               <th>CAS</th>
               <th>Purity</th>
               <th>Grade</th>
@@ -247,34 +237,19 @@ export default function Products() {
               </tr>
             ) : (
               products.map((p) => (
-                <tr
-                  key={p.id}
-                  className="bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
-                >
+                <tr key={p.id}>
                   <td>{p.id}</td>
-                  <td>
-                    <img src={p.imageUrl} className="w-12 rounded" />
-                  </td>
+                  <td><img src={p.imageUrl} className="w-12 rounded" /></td>
                   <td>{p.title}</td>
-                  <td>{p.description}</td>
+                  <td>{p.industry?.title}</td>
                   <td>{p.casNumber}</td>
                   <td>{p.purity}</td>
                   <td>{p.grade}</td>
                   <td>{p.quantity}</td>
                   <td>{p.category?.title}</td>
                   <td className="space-x-1">
-                    <button
-                      className="btn btn-xs btn-info"
-                      onClick={() => setEditItem(p)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-xs btn-error"
-                      onClick={() => setDeleteItem(p)}
-                    >
-                      Delete
-                    </button>
+                    <button className="btn btn-xs btn-info" onClick={() => setEditItem(p)}>Edit</button>
+                    <button className="btn btn-xs btn-error" onClick={() => setDeleteItem(p)}>Delete</button>
                   </td>
                 </tr>
               ))
@@ -290,47 +265,60 @@ export default function Products() {
             <h3 className="font-bold text-lg mb-3">Edit Product</h3>
 
             <div className="grid md:grid-cols-3 gap-3">
-              {["title", "casNumber", "purity", "grade", "quantity"].map(
-                (field) => (
-                  <input
-                    key={field}
-                    className="input input-bordered bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
-                    value={editItem[field] || ""}
-                    onChange={(e) =>
-                      setEditItem({ ...editItem, [field]: e.target.value })
-                    }
-                    placeholder={field}
-                  />
-                )
-              )}
+              {["title", "casNumber", "purity", "grade", "quantity"].map((field) => (
+                <input
+                  key={field}
+                  className="
+                    input input-bordered
+                    bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25]
+                    text-white
+                    placeholder:text-white/70
+                  "
+                  value={editItem[field] || ""}
+                  placeholder={field}
+                  onChange={(e) =>
+                    setEditItem({ ...editItem, [field]: e.target.value })
+                  }
+                />
+              ))}
 
+              {/* Category */}
               <select
-                className="select select-bordered  bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+                className="select select-bordered bg-[#0B1F2A] text-white"
                 value={editItem.categoryId || ""}
                 onChange={(e) =>
                   setEditItem({ ...editItem, categoryId: e.target.value })
                 }
               >
-                <option
-                  value=""
-                  className=" bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
-                >
-                  Select Category
-                </option>
+                <option value="">Select Category</option>
                 {categories.map((c) => (
-                  <option
-                    className=" bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
-                    key={c.id}
-                    value={c.id}
-                  >
-                    {c.title}
-                  </option>
+                  <option key={c.id} value={c.id}>{c.title}</option>
+                ))}
+              </select>
+
+              {/* Industry */}
+              <select
+                className="select select-bordered bg-[#0B1F2A] text-white"
+                value={editItem.industryId || ""}
+                onChange={(e) =>
+                  setEditItem({ ...editItem, industryId: e.target.value })
+                }
+              >
+                <option value="">Select Industry</option>
+                {industries.map((i) => (
+                  <option key={i.id} value={i.id}>{i.title}</option>
                 ))}
               </select>
             </div>
 
             <textarea
-              className="textarea textarea-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+              className="
+                textarea textarea-bordered w-full mt-3
+                bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25]
+                text-white
+                placeholder:text-white/70
+              "
+              placeholder="Description"
               value={editItem.description || ""}
               onChange={(e) =>
                 setEditItem({ ...editItem, description: e.target.value })
@@ -339,7 +327,7 @@ export default function Products() {
 
             <input
               type="file"
-              className="file-input file-input-bordered w-full mt-3 bg-gradient-to-r from-[#0F3D2E] via-[#0B1F2A] to-[#0A1B25] text-white"
+              className="file-input file-input-bordered w-full mt-3"
               onChange={(e) => handleImage(e.target.files[0])}
             />
 
@@ -354,11 +342,7 @@ export default function Products() {
                 onClick={handleUpdate}
                 disabled={loadingEdit}
               >
-                {loadingEdit ? (
-                  <span className="loading loading-spinner"></span>
-                ) : (
-                  "Save"
-                )}
+                {loadingEdit ? <span className="loading loading-spinner"></span> : "Save"}
               </button>
               <button className="btn" onClick={() => setEditItem(null)}>
                 Cancel
@@ -382,11 +366,7 @@ export default function Products() {
                 onClick={handleDelete}
                 disabled={loadingDelete}
               >
-                {loadingDelete ? (
-                  <span className="loading loading-spinner"></span>
-                ) : (
-                  "Delete"
-                )}
+                {loadingDelete ? <span className="loading loading-spinner"></span> : "Delete"}
               </button>
               <button className="btn" onClick={() => setDeleteItem(null)}>
                 Cancel
@@ -395,6 +375,7 @@ export default function Products() {
           </div>
         </div>
       )}
+
     </div>
   );
 }
